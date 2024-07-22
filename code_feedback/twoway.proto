@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package test;
+
+// import ""
+
+service World{
+    rpc HelloWorld(HelloWorldReq) returns (HelloWorldReply) {}
+    rpc HelloTest(stream HelloTestRequest) returns (stream HelloTestResponse) {}
+    rpc TestClientRecvStream(TestClientRecvStreamRequest) returns (stream TestClientRecvStreamResponse) {}
+    rpc TestClientSendStream(stream TestClientSendStreamRequest) returns (TestClientSendStreamResponse) {}
+    rpc TestTwoWayStream(stream TestTwoWayStreamRequest) returns (stream TestTwoWayStreamResponse) {}
+}
+
+message HelloWorldReq {
+    string name = 1;
+    int32 age = 2;
+}
+
+message HelloWorldReply {
+    string result = 1;
+}
+
+message HelloTestRequest {
+    string name = 1;
+    int64 age = 2;
+    repeated string date = 3;
+    // message HelloTestRequestNumberValue {  // 仅供 HelloTestRequest 使用
+    //     string name = 1;
+    //     int32 age = 2;
+    //     bool is_active = 3;
+    // }
+    // map<string, int64> number = 4;  // string, int32, bool
+    map<string, HelloTestRequestNumberValue> number = 4;  // string, int32, bool
+}
+
+message HelloTestRequestNumberValue {  // 供全局使用
+    string name = 1;
+    int32 age = 2;
+    bool is_active = 3;
+}
+
+message HelloTestResponse {
+    
+}
+
+message TestClientRecvStreamRequest {
+    string data = 1;
+}
+
+message TestClientRecvStreamResponse {
+    int32 code = 1;
+    string msg = 2;
+    string name = 3;
+    string age = 4;
+//    string result = 1;
+}
+
+message TestClientSendStreamRequest {
+    string data = 1;
+}
+
+message TestClientSendStreamResponse {
+    string result = 1;
+}
+
+message TestTwoWayStreamRequest {
+    string data = 1;
+}
+
+message TestTwoWayStreamResponse {
+    string result = 1;
+}
